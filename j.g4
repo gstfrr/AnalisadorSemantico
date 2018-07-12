@@ -21,8 +21,8 @@ classBody : '{' (modifiers memberDecl)* '}'
 		  ;
 
 memberDecl : ID formalParameters block
-			 | ('void' | tipe) ID formalParameters (block | ';')
-			 | tipe variableDeclarators ';'
+			 | ('void' | typ) ID formalParameters (block | ';')
+			 | typ variableDeclarators ';'
 		   ;
 
 block : '{' (blockStatement)* '}'
@@ -44,13 +44,13 @@ statement : block
 formalParameters : '(' ( formalParameter (',' formalParameter)* )? ')'
   				 ;
 
-formalParameter : tipe ID
+formalParameter : typ ID
     			;
 
 parExpression : '(' expression ')'
 			  ;
 
-localVariableDeclarationStatement : tipe variableDeclarators ';'
+localVariableDeclarationStatement : typ variableDeclarators ';'
 								  ;
 
 variableDeclarators : variableDeclarator (',' variableDeclarator)*
@@ -68,7 +68,7 @@ arrayInitializer : '{' ( variableInitializer (',' variableInitializer)* )? '}'
 arguments : '(' ( expression (',' expression)* )? ')'
 		  ;
 
-tipe : referenceType | basicType
+typ : referenceType | basicType
      ;
 
 basicType : 'boolean' | 'char' | 'int'
