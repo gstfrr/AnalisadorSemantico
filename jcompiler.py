@@ -52,9 +52,7 @@ class CodeGenerator(jVisitor):
         block = self.func.append_basic_block(name='.entry')
         self.builder = ir.IRBuilder(block)
 
-
-
-    def visitVarDecl(self, ctx):
+    def visitVariableDeclarator(self, ctx):
         typ = ctx.typ().getText()
         ide = ctx.ID().getText()
         self.new_var(self.types[typ], ide)
@@ -180,12 +178,15 @@ class CodeGenerator(jVisitor):
 
 if __name__ == '__main__':
     inputs = FileStream('tests/test1.j')
-    # inputs = FileStream(sys.argv[1])
     lexer = jLexer(inputs)
+
     tokens = CommonTokenStream(lexer)
     parser = jParser(tokens)
 
     tree = parser.compilationUnit()
-    codegen = CodeGenerator()
-    codegen.visit(tree)
-    print(codegen.module)
+
+
+    # codegen = CodeGenerator()
+    # codegen.visit(tree)
+    # print('Codegen module:')
+    # print(codegen.module)
