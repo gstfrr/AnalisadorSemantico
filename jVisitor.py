@@ -104,8 +104,8 @@ class jVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by jParser#tipe.
-    def visitTipe(self, ctx:jParser.TipeContext):
+    # Visit a parse tree produced by jParser#typ.
+    def visitTyp(self, ctx:jParser.TypContext):
         return self.visitChildren(ctx)
 
 

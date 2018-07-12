@@ -273,7 +273,7 @@ class jParser ( Parser ):
     RULE_variableInitializer = 16
     RULE_arrayInitializer = 17
     RULE_arguments = 18
-    RULE_tipe = 19
+    RULE_typ = 19
     RULE_basicType = 20
     RULE_referenceType = 21
     RULE_statementExpression = 22
@@ -298,7 +298,7 @@ class jParser ( Parser ):
                    "block", "blockStatement", "statement", "formalParameters", 
                    "formalParameter", "parExpression", "localVariableDeclarationStatement", 
                    "variableDeclarators", "variableDeclarator", "variableInitializer", 
-                   "arrayInitializer", "arguments", "tipe", "basicType", 
+                   "arrayInitializer", "arguments", "typ", "basicType", 
                    "referenceType", "statementExpression", "expression", 
                    "assignmentExpression", "conditionalAndExpression", "equalityExpression", 
                    "relationalExpression", "additiveExpression", "multiplicativeExpression", 
@@ -743,8 +743,8 @@ class jParser ( Parser ):
             return self.getTypedRuleContext(jParser.BlockContext,0)
 
 
-        def tipe(self):
-            return self.getTypedRuleContext(jParser.TipeContext,0)
+        def typ(self):
+            return self.getTypedRuleContext(jParser.TypContext,0)
 
 
         def variableDeclarators(self):
@@ -792,7 +792,7 @@ class jParser ( Parser ):
                     pass
                 elif token in [jParser.T__23, jParser.T__24, jParser.T__25, jParser.ID]:
                     self.state = 140
-                    self.tipe()
+                    self.typ()
                     pass
                 else:
                     raise NoViableAltException(self)
@@ -820,7 +820,7 @@ class jParser ( Parser ):
             elif la_ == 3:
                 self.enterOuterAlt(localctx, 3)
                 self.state = 149
-                self.tipe()
+                self.typ()
                 self.state = 150
                 self.variableDeclarators()
                 self.state = 151
@@ -1153,8 +1153,8 @@ class jParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def tipe(self):
-            return self.getTypedRuleContext(jParser.TipeContext,0)
+        def typ(self):
+            return self.getTypedRuleContext(jParser.TypContext,0)
 
 
         def ID(self):
@@ -1179,7 +1179,7 @@ class jParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 207
-            self.tipe()
+            self.typ()
             self.state = 208
             self.match(jParser.ID)
         except RecognitionException as re:
@@ -1238,8 +1238,8 @@ class jParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def tipe(self):
-            return self.getTypedRuleContext(jParser.TipeContext,0)
+        def typ(self):
+            return self.getTypedRuleContext(jParser.TypContext,0)
 
 
         def variableDeclarators(self):
@@ -1265,7 +1265,7 @@ class jParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 214
-            self.tipe()
+            self.typ()
             self.state = 215
             self.variableDeclarators()
             self.state = 216
@@ -1567,7 +1567,7 @@ class jParser ( Parser ):
             self.exitRule()
         return localctx
 
-    class TipeContext(ParserRuleContext):
+    class TypContext(ParserRuleContext):
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1582,21 +1582,21 @@ class jParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return jParser.RULE_tipe
+            return jParser.RULE_typ
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTipe" ):
-                return visitor.visitTipe(self)
+            if hasattr( visitor, "visitTyp" ):
+                return visitor.visitTyp(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def tipe(self):
+    def typ(self):
 
-        localctx = jParser.TipeContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 38, self.RULE_tipe)
+        localctx = jParser.TypContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 38, self.RULE_typ)
         try:
             self.state = 263
             self._errHandler.sync(self)
