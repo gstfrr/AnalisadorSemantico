@@ -1,189 +1,154 @@
-//	Define a grammar called J
 grammar j;
 
-compilationUnit:
-	 ('package' qualifiedIdentifier ';')? ('import' qualifiedIdentifier ';')* (type2Declaration)* EOF
-	;
+compilationUnit : ('package' qualifiedIdentifier ';')?
+				  ('import' qualifiedIdentifier ';')*
+				  (typeDeclaration)* EOF
+				;
 
-qualifiedIdentifier:
-	ID (',' ID)*
-	;
+qualifiedIdentifier : ID ('.' ID)*
+					;
 
-type2Declaration:
-	modifiers classDeclaration
-	;
+typeDeclaration : modifiers classDeclaration
+				;
 
-modifiers:
-	 ('public' | 'protected' | 'private' | 'static' | 'abstratc')*
-	;
+modifiers : ('public' | 'protected' | 'private' | 'static' | 'abstract')*
+          ;
 
-classDeclaration:
-	'class' ID ('extends' qualifiedIdentifier)? classBody
-	;
+classDeclaration : 'class' ID ('extends' qualifiedIdentifier)? classBody
+				 ;
 
-classBody:
-	'{' (modifiers memberDecl)* '}'
-	;
+classBody : '{' (modifiers memberDecl)* '}'
+		  ;
 
-memberDecl:
-	ID formalParameters block  // construtor
-	| ('void' | 'type2') ID formalParameters (block | ';') // metodo
-	| type2 variableDeclarators ';' // campos
-	;
+memberDecl : ID formalParameters block
+			 | ('void' | tipe) ID formalParameters (block | ';')
+			 | tipe variableDeclarators ';'
+		   ;
 
-block:
-	'{' (blockStatement)* '}'
-	;
+block : '{' (blockStatement)* '}'
+      ;
 
-blockStatement:
-	localVariableDeclarationStatement
-	| statement
-	;
+blockStatement : localVariableDeclarationStatement
+				 | statement
+			   ;
 
-statement:
-	block
-	| ID ':' statement
-	| 'if' parExpression statement ('else' statement)?
-	| 'while' parExpression statement
-	| 'return' (expression)? ';'
-	| ';'
-	| statementExpression  ';'
-	;
+statement : block
+			| ID ':' statement
+			| 'if' parExpression statement ('else' statement)?
+			| 'while' parExpression statement
+			| 'return' (expression)? ';'
+			| ';'
+			| statementExpression ';'
+		  ;
 
-formalParameters:
-	'(' (formalParameter (',' formalParameter)*)?  ')'
-	;
+formalParameters : '(' ( formalParameter (',' formalParameter)* )? ')'
+  				 ;
 
-formalParameter:
-	type2 ID
-	;
+formalParameter : tipe ID
+    			;
 
-parExpression:
-	'(' expression ')'
-	;
+parExpression : '(' expression ')'
+			  ;
 
-localVariableDeclarationStatement:
-	type2 variableDeclarators ';'
-	;
+localVariableDeclarationStatement : tipe variableDeclarators ';'
+								  ;
 
-variableDeclarators:
-	variableDeclarator (',' variableDeclarator)*
-	;
+variableDeclarators : variableDeclarator (',' variableDeclarator)*
+					;
 
-variableDeclarator:
-	ID ('=' variableInitializer)?
-	;
+variableDeclarator : ID ('=' variableInitializer)?
+				   ;
 
-variableInitializer:
-	arrayInitializer
-	| expression
-	;
+variableInitializer : arrayInitializer | expression
+                    ;
 
-arrayInitializer:
-	'{' (variableInitializer (',' variableInitializer)*)? '}'
-	;
+arrayInitializer : '{' ( variableInitializer (',' variableInitializer)* )? '}'
+				 ;
 
-arguments:
-	'(' (expression (',' expression)*)? ')'
-	;
+arguments : '(' ( expression (',' expression)* )? ')'
+		  ;
 
-type2:
-	referenceType
-	| basicType
-	;
+tipe : referenceType | basicType
+     ;
 
-basicType:
-	'boolean'
-	| 'char'
-	| 'int'
-	;
+basicType : 'boolean' | 'char' | 'int'
+		  ;
 
-referenceType:
-	basicType '[' ']' ('[' ']')*
-	| qualifiedIdentifier ('[' ']')*
-	;
+referenceType : basicType '[' ']' ('[' ']')*
+				| qualifiedIdentifier ('[' ']')*
+			  ;
 
-statementExpression:
-	expression
-	;
+statementExpression : expression 
+				    ;
 
-expression:
-	assignmentExpression
-	;
+expression : assignmentExpression	
+		   ;
 
-assignmentExpression:
-	conditionalAndExpression (('=' | '+=') assignmentExpression)?
-	;
+assignmentExpression : conditionalAndExpression ( ('=' | '+=') assignmentExpression)?
+					 ;
 
-conditionalAndExpression:
-	equalityExpression ('&&' equalityExpression)*
-	;
+conditionalAndExpression : equalityExpression ('&&' equalityExpression)*
+						 ;
 
-equalityExpression:
-	relationalExpression ('==' relationalExpression)*
-	;
+equalityExpression : relationalExpression ('==' relationalExpression)*
+				   ;
 
-relationalExpression:
-	additiveExpression (('>' | '<=') additiveExpression | 'instanceof' referenceType)?
-	;
+relationalExpression : additiveExpression ( ('>' | '<=') additiveExpression | 'instanceof' referenceType)?
+					 ;
 
-additiveExpression:
-	multiplicativeExpression (('+' | '-') multiplicativeExpression)*
-	;
+additiveExpression : multiplicativeExpression ( ('+'|'-') multiplicativeExpression)*
+				   ;
 
-multiplicativeExpression:
-	unaryExpression ('*' unaryExpression)*
-	;
+multiplicativeExpression : unaryExpression ('*' unaryExpression)*
+						 ;
 
-unaryExpression:
-	'++' unaryExpression
-	| '-' unaryExpression
-	| simpleUnaryExpression
-	;
+unaryExpression : '++' unaryExpression 
+				  | '-' unaryExpression
+				  | simpleUnaryExpression
+				;
 
-simpleUnaryExpression:
-	'!' unaryExpression
-	| '(' basicType ')' unaryExpression
-	| '(' referenceType ')' simpleUnaryExpression
-	| postfixExpression
-	;
+simpleUnaryExpression : '!' unaryExpression
+						| '(' basicType ')' unaryExpression 
+						| '(' referenceType ')' simpleUnaryExpression 
+						| postfixExpression
+					  ;
 
-postfixExpression:
-	primary (selector)* ('--')*
-	;
+postfixExpression : primary (selector)* ('--')*
+  				  ;
 
-selector:
-	'.' qualifiedIdentifier (arguments)?
-	| '[' expression ']'
-	;
+selector : '.' qualifiedIdentifier (arguments)?
+		   | '[' expression ']'
+		 ;
 
-primary:
-	parExpression
-	| 'this' (arguments)?
-	| 'super' (arguments | '.' ID (arguments)?)
-	;
+primary : parExpression
+			| 'this' (arguments)?
+			| 'super' (arguments | '.' ID (arguments)?)
+			| literal
+			| 'new' creator
+			| qualifiedIdentifier (arguments)?
+		;
 
-creator:
-	(basicType | qualifiedIdentifier) '(' arguments | '[' ']' ('[' ']')* (arrayInitializer)? | newArrayDeclarator ')'
-	;
+creator : (basicType | qualifiedIdentifier)
+		  ( arguments | '[' ']' ('[' ']')* (arrayInitializer)? | newArrayDeclarator )
+		;
 
-newArrayDeclarator:
-	'[' expression ']' ('[' expression ']')* ('[' ']')*
-	;
+newArrayDeclarator : '[' expression ']' ('[' expression ']')* ('[' ']')*
+ 				   ;
 
-literal:
-	INT_LITERAL
-	| CHAR_LITERAL
-	| STRING_LITERAL
-	| 'true'
-	| 'false'
-	| 'null'
-	;
+literal : INT | CHAR | STRING | 'true' | 'false' | 'null'
+        ;
 
-fragment DIGIT: [0-9] ;
-NUMBER: DIGIT+ ([.,] DIGIT+)? ;
-ID : ('a'..'z'|'A'..'Z')+  ;
-INT_LITERAL: '0' | [1-9][0-9]* ;
-CHAR_LITERAL: ;
-STRING_LITERAL: ;
-WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
+ID : ([a-zA-Z]+|'_'|'$')([a-zA-Z]+|'_'|[0-9]+|'$')* ;
+INT : [0-9]+ ;
+CHAR : '\'' (~['\\\r\n] | EscapeSequence) '\'' ;
+STRING : '"' (~["\\\r\n] | EscapeSequence)* '"' ;
+WS : [ \t\r\n\u000C]+ -> channel(HIDDEN) ;
+COMMENT : '/*' .*? '*/'    -> channel(HIDDEN) ;
+LINE_COMMENT : '//' ~[\r\n]*    -> channel(HIDDEN) ;
+
+fragment EscapeSequence : '\\' [btnfr"'\\]
+    					  | '\\' ([0-3]? [0-7])? [0-7]
+                          | '\\' 'u'+ HexDigit HexDigit HexDigit HexDigit
+                        ;
+fragment HexDigit : [0-9a-fA-F]
+                  ;
