@@ -177,8 +177,8 @@ class CodeGenerator(jVisitor):
 
 
 if __name__ == '__main__':
-    inputs = FileStream('tests/test_err.j')
-    # inputs = FileStream('tests/test1.j')
+    # inputs = FileStream('tests/test_err.j')
+    inputs = FileStream('tests/test1.j')
     lexer = jLexer(inputs)
 
     tokens = CommonTokenStream(lexer)
@@ -186,6 +186,14 @@ if __name__ == '__main__':
 
     tree = parser.compilationUnit()
 
+
+    my_tokens = tokens.getTokens(0,200)
+    tabela = []
+    for i in my_tokens:
+        tabela.append((i.tokenIndex, i.type, i.text))
+
+
+    print(*tabela, sep='\n')
 
     # codegen = CodeGenerator()
     # codegen.visit(tree)
